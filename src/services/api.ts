@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 
 import { parseCookies, setCookie } from 'nookies'
+import { singOut } from '../contexts/AuthContext';
 
 let cookies = parseCookies();
 let isRefreshing = false;
@@ -18,7 +19,6 @@ api.interceptors.response.use(response => {
 }, (error: AxiosError) => {
     if (error.response.status === 401) {
         if (error.response.data?.code === 'token.expired') {
-            //renovar o token
             cookies = parseCookies();
 
             const { 'nextauth.refreshToken': refreshToken } = cookies;
@@ -69,7 +69,9 @@ api.interceptors.response.use(response => {
                 })
             })
         } else {
-            // deslogar o usuário
+            singOut();
         }
     }
+
+    return Promise.reject(error)
 })
