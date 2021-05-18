@@ -1,6 +1,9 @@
 import { useContext, useEffect } from "react";
+import { destroyCookie } from "nookies";
 import { AuthContext } from "../contexts/AuthContext";
-import { api } from "../services/api";
+import { withSSRAuth } from "../utils/withSSRAuth";
+import { setupAPIClient } from "../services/api";
+import { api } from "../services/apiClient";
 
 export default function Dashboard() {
 
@@ -9,11 +12,21 @@ export default function Dashboard() {
     useEffect(() => {
         api.get('/me')
             .then(response => console.log(response))
-            .catch(err => console.log(err))
     }, [])
     return (
         <div>
-            <h1>Hello {user?.email}</h1>
+            <h1>Dashboard: {user?.email}</h1>
         </div>
     );
 }
+
+export const getServerSideProps = withSSRAuth(async (ctx) => {
+    const apiClient = setupAPIClient(ctx)
+    const response = await apiClient.get('/me')
+
+    console.log(response.data)
+
+    return {
+        props: {}
+    }
+})
