@@ -1,0 +1,39 @@
+.container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.formContainer {
+    width: 100%;
+    max-width: 360px;
+    background: var(--gray-800);
+    padding: 15px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    input {
+        border: none;
+        background: var(--gray-900);
+        padding: 0.5rem 1.5rem;
+        font-size: 1rem;
+        text-align: center;
+        border-radius: 5px;
+        color: var(--white);
+        margin-top: 10px;
+    }
+
+    button {
+        border: none;
+        width: 50%;
+        border-radius: 5px;
+        margin: 10px auto 5px;
+        padding: 0.5rem 1.5rem;
+        background: var(--yellow-500);
+    }
+}
